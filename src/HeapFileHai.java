@@ -1,7 +1,8 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class HeapFileHai
+public class HeapFileHai implements Serializable
 {
     private ArrayList<Page> pages = new ArrayList<>();
     private int currPage = 0, numOfRecords = 0;
@@ -19,21 +20,31 @@ public class HeapFileHai
     {
         if(pages.get(currPage).AddRecord(newRecord) == true)
         {
-            //nothing happen
+            //write without gap
         }
         else
         {
             currPage++;
             pages.add(new Page());
             pages.get(currPage).AddRecord(newRecord);
+
+            //write with gap
         }
         numOfRecords++;
+//        try(FileOutputStream fos = new FileOutputStream("heap.pagesize");
+//            ObjectOutputStream oos = new ObjectOutputStream(fos)){
+//            oos.writeObject(newRecord);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        // this function is to output a heap.pagesize file containing binary data of the fields.
     }
     public Page getPage(int idx)
     {
         return pages.get(idx);
     }
-    public class Page
+    public class Page implements Serializable
     {
         private ArrayList<Record> records = new ArrayList<>();
         public int pagesize = pageSize;
@@ -60,7 +71,7 @@ public class HeapFileHai
         }
 
     }
-    public class Record
+    public class Record implements Serializable
     {
         private int wikiPageID;
         private String wiki2;
