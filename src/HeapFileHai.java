@@ -38,7 +38,7 @@ public class HeapFileHai implements Serializable
 //            e.printStackTrace();
 //        }
 
-        // this function is to output a heap.pagesize file containing binary data of the fields.
+        // this function is to output a heap.pagesize file containing binary data of the fields. But i realised it takes very long to write down the whole output as i only managed to change interger to binary and not the remaining fields of data
     }
     public Page getPage(int idx)
     {
@@ -88,13 +88,10 @@ public class HeapFileHai implements Serializable
             this.instrument_label = instrument_label;
             this.nationality_label = nationality_label;
             this.thumbnail = thumbnail;
-//            System.out.println(wikiPageID);
-//            System.out.println(wikiPageID=="30865730");
-//            this.wiki2 = wikiPageID;
             this.wikiPageID = wikiPageID.equals("NULL") ? 0 : Integer.parseInt(wikiPageID);
             this.description = description;
 
-
+            // so this is to set when data is not null, the size will be its repesctive size, else if it is null make it 0.
             size += !personName.equals("NULL") ? personName.length() : 0;
             size += !birthDate.equals("NULL") ? birthDate.length() : 0;
             size += !birthPlace_label.equals("NULL") ? birthPlace_label.length() : 0;
@@ -104,11 +101,12 @@ public class HeapFileHai implements Serializable
             size += !instrument_label.equals("NULL") ? instrument_label.length() : 0;
             size += !nationality_label.equals("NULL") ? nationality_label.length() : 0;
             size += !thumbnail.equals("NULL") ? thumbnail.length() : 0;
-            size += !wikiPageID.equals("NULL") ? 4 : 0;
+            size += !wikiPageID.equals("NULL") ? 4 : 0; // because wikiPageID is integer it will be converted  to 4 bytes
             size += !description.equals("NULL") ? description.length() : 0;
         }
         public String toString()
         {
+            // this code is redundant, it was just for me to test if the script was able to read and take the data
             return "Size: " + size + "//" + personName + "//"+ birthDate + "//" + birthPlace_label + "//"+ deathDate + "//" + field_label + "//" + genre_label + "//" + instrument_label + "//" + nationality_label + "//" + thumbnail + "//" + description + "//" + wikiPageID;
         }
     }

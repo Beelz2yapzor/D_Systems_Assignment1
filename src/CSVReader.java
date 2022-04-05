@@ -16,7 +16,7 @@ public class CSVReader {
         String line = "";
 
         HeapFileHai hf = new HeapFileHai(pageSize);
-//        HeapFileHai hf = new HeapFileHai(0);
+
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             for(int i = 0; i < 4; i++){
@@ -26,9 +26,12 @@ public class CSVReader {
             while((line = br.readLine()) !=null){
                 System.out.println("data loaded "+ j);
                 j++;
-//                System.out.println(line);
+
+                // this is to show the data is loading which row
+
                 String [] att = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-//                System.out.println(att.length);
+                //due to the csv file having "," in their data it separates the data therefore regex is needed
+
                 att[1] = att[1].substring(1,att[1].length()-1);
                 att[23] = att[23].substring(1,att[23].length()-1);
                 att[25] = att[25].substring(1,att[25].length()-1);
@@ -49,7 +52,7 @@ public class CSVReader {
             e.printStackTrace();
         }
         return hf;
-//        System.out.println(hf.getPage(56).getRecord(1));
+
     }
 
 }
